@@ -1,11 +1,3 @@
-// *******************************************
-// *
-// *     Espero ter acertado as cores :)     *
-// *
-// *******************************************
-
-
-
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import Slider from '@react-native-community/slider';
@@ -15,6 +7,25 @@ const FormIMC = () => {
   const [altura, setAltura] = useState(170);
   const [genero, setGenero] = useState("");
   const [resultado, setResultado] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleAlturaChange = (text) => {
+    if (isNaN(text)) {
+      setErrorMessage("Por favor, insira apenas números para a altura.");
+    } else {
+      setErrorMessage("");
+      setAltura(Number(text));
+    }
+  };
+
+  const handlePesoChange = (text) => {
+    if (isNaN(text)) {
+      setErrorMessage("Por favor, insira apenas números para o peso.");
+    } else {
+      setErrorMessage("");
+      setPeso(Number(text));
+    }
+  };
 
   const calcularIMC = () => {
     if (peso <= 0 || altura <= 0) {
@@ -141,8 +152,11 @@ const FormIMC = () => {
             style={styles.input}
             keyboardType="numeric"
             value={String(altura)}
-            onChangeText={text => setAltura(Number(text))}
+            onChangeText={handleAlturaChange}
           />
+          {errorMessage !== "" && (
+            <Text style={styles.error}>{errorMessage}</Text>
+          )}
         </View>
 
         {/* Ajuste de Peso */}
@@ -162,8 +176,11 @@ const FormIMC = () => {
             style={styles.input}
             keyboardType="numeric"
             value={String(peso)}
-            onChangeText={text => setPeso(Number(text))}
+            onChangeText={handlePesoChange}
           />
+          {errorMessage !== "" && (
+            <Text style={styles.error}>{errorMessage}</Text>
+          )}
         </View>
 
         <TouchableOpacity onPress={calcularIMC} style={styles.botao}>
@@ -272,6 +289,11 @@ const styles = StyleSheet.create({
   textoResultado: {
     fontSize: 18,
     textAlign: 'center'
+  },
+  error: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 5
   }
 });
 
