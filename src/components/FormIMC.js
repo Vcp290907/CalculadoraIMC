@@ -9,7 +9,7 @@ const FormIMC = () => {
   const [resultado, setResultado] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleAlturaChange = (text) => {
+  const handleAlturaMuda = (text) => {
     if (isNaN(text)) {
       setErrorMessage("Por favor, insira apenas números para a altura.");
     } else {
@@ -18,7 +18,7 @@ const FormIMC = () => {
     }
   };
 
-  const handlePesoChange = (text) => {
+  const handlePesoMuda = (text) => {
     if (isNaN(text)) {
       setErrorMessage("Por favor, insira apenas números para o peso.");
     } else {
@@ -39,7 +39,8 @@ const FormIMC = () => {
 
     let cat;
     let cor;
-
+    
+    //Estrutura de if e else para classificar o grau do IMC
     if (genero === "homem") {
       if (imc < 18.5) {
         cat = "Abaixo do peso";
@@ -152,7 +153,7 @@ const FormIMC = () => {
             style={styles.input}
             keyboardType="numeric"
             value={String(altura)}
-            onChangeText={handleAlturaChange}
+            onChangeText={handleAlturaMuda}
           />
           {errorMessage !== "" && (
             <Text style={styles.error}>{errorMessage}</Text>
@@ -176,7 +177,7 @@ const FormIMC = () => {
             style={styles.input}
             keyboardType="numeric"
             value={String(peso)}
-            onChangeText={handlePesoChange}
+            onChangeText={handlePesoMuda}
           />
           {errorMessage !== "" && (
             <Text style={styles.error}>{errorMessage}</Text>
